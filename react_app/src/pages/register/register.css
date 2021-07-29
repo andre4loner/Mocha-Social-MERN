@@ -1,0 +1,182 @@
+
+.register-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgb(0, 0, 0, 0.0);
+}
+.register-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgb(0, 210, 215);
+  clip-path: circle(30% at right 70%);
+  -webit-clip-path: circle(30% at right 70%);
+  z-index: 0;
+}
+.register-container::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgb(238, 98, 152);
+  clip-path: circle(20% at 10% 10%);
+  -webkit-clip-path: circle(20% at 10% 10%);
+  z-index: 0;
+}
+
+.register-wrapper {
+  width: 375px;
+  height: 625px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 2rem;
+  background-image: url("https://wallpapercave.com/wp/wp6487428.jpg");
+  background-color: rgb(43, 112, 119);
+  background-size: cover;
+  -webkit-box-shadow: 0px 0px 30px rgb(43, 112, 119, 0.5);
+  box-shadow: 0px 10px 30px rgb(43, 112, 119, 0.5);
+  overflow: hidden;
+  z-index: 3;
+}
+
+.register-top {
+  width: 100%;
+  height: 85px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  /* border-radius: 50%;
+  background: white;
+  -webkit-box-shadow: 0px 0px 15px rgba(150, 150, 150, 0.6);
+  box-shadow: 0px 0px 8px rgba(150, 150, 150, 0.6); */
+}
+.register-title {
+  color: darkblue;
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+/* .register-logo-img {
+  margin-bottom: 0px;
+  margin-left: 80px;
+  width: 125px;
+  height: 125px;
+  border-radius: 50%;
+  object-fit: cover;
+} */
+
+
+.register-logo-text {
+  position: absolute;
+  left: -200px;
+  bottom: 200px;
+  font-size: 7rem;
+  font-weight: 600;
+  letter-spacing: 0.8rem;
+  color: white;
+  transform: rotate(270deg);
+  z-index: 5;
+}
+.register-logo-text2 {
+  position: absolute;
+  left: -195px;
+  bottom: 205px;
+  font-size: 7.15rem;
+  font-weight: 600;
+  letter-spacing: 0.8rem;
+  color: darkblue;
+  transform: rotate(270deg);
+  z-index: 4;
+}
+
+.register-bottom {
+  margin-top: 50px;
+  height: 500px;
+  width: 300px;
+}
+.register-form {
+  width: 250px;
+  position: absolute;
+  right: 25px;
+  display: flex;
+  flex-direction: column;
+}
+.register-input {
+  margin: 15px 0px 20px;
+  padding: 0rem 1.3rem;
+  height: 45px;
+  width: 100%;
+  border-radius: 4rem;
+  font-size: 0.9rem;
+  color: darkblue;
+  border: none;
+  text-align: center;
+  /* border: 2px solid rgb(255, 231, 217, 1); */
+  /* -webkit-box-shadow: 0px 0px 15px rgba(150, 150, 150, 0.6);
+  box-shadow: 0px 4px 10px rgba(150, 150, 150, 0.4); */
+}
+.register-input:focus {
+  outline: none;
+}
+.register-button {
+  max-width: 180px;
+  margin-top: 10px;
+  padding: 0.5rem 1.8rem;
+  align-self: center;
+  font-size: 1.3rem;
+  font-weight: 600;
+  border-radius: 3rem;
+  border: none;
+  background: darkblue;
+  color: white;
+  cursor: pointer;
+  transition-duration: 250ms;
+}
+.register-button:hover {
+  letter-spacing: 1px;
+}
+.register-button:disabled {
+  cursor: not-allowed;
+}
+
+.log-in {
+  margin-bottom: 30px;
+  margin-left: 68px;
+  padding: 0.4rem 1.6rem;
+  align-self: center;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 3rem;
+  border: 3px solid white;
+  background: rgb(68, 221, 47);
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  transition-duration: 250ms;
+  text-decoration: none;
+}
+.log-in:hover {
+  letter-spacing: 0.4px;
+}
+.log-in:disabled {
+  cursor: not-allowed;
+}
+
+.bottom-text {
+  position: absolute;
+  bottom: 10px;
+  color: rgb(0, 0, 136, 0.8);
+  font-size: 0.8rem;
+}

@@ -1,0 +1,75 @@
+
+.rightbar-container {
+  flex: 1;
+  height: 100%;
+  position: sticky;
+  -webkit-position: sticky;
+  top: 60px;
+  overflow: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(108, 61, 61, 0.35) rgba(108, 61, 61, 0.1);
+  z-index: 1;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}::-webkit-scrollbar-track {
+  background-color: rgba(108, 61, 61, 0.1);
+}::-webkit-scrollbar-thumb {
+  background-color: rgba(108, 61, 61, 0.35);
+}
+
+.rightbar-wrapper {
+  padding: 20px;
+}
+
+.birthday-container {
+  display: flex;
+  align-items: center;
+}
+.birthday-img {
+  width: 50px;
+  margin-right: 10px;
+}
+.birthday-text {
+  font-size: 1rem;
+  font-weight: 300;
+}
+.birthday-text b {
+  font-weight: 600;
+}
+
+.rightbar-ad-img {
+  margin: 40px 0px;
+  width: 100%;
+  border-radius: 1rem;
+}
+
+.rightbar-friend {
+  margin: 20px;
+  display: flex;
+  align-items: center;
+}
+.rightbar-friend-img-wrapper {
+  margin-right: 30px;
+  display: flex;
+  position: relative;
+}
+.rightbar-friend-img {
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.rightbar-online {
+  margin-left: 0px;
+  width: 15px;
+  height: 15px;
+  left: 50px;
+  position: absolute;
+  box-sizing: content-box;
+  background: limegreen;
+  border: 4px solid white;
+  border-radius: 50%;
+}
+

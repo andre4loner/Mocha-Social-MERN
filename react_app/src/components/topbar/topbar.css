@@ -1,0 +1,106 @@
+
+.topbar-container {
+  height: 60px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  position: sticky;
+  -webkit-position: sticky;
+  top: 0;
+  /* background: rgba(108, 61, 61, 0.9); */
+  background: rgb(0, 210, 215);
+  overflow: hidden;
+  z-index: 2;
+}
+
+
+.topbar-left {
+  flex: 2;
+  margin-left: 20px;
+}
+.logo {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+}
+
+
+.topbar-center {
+  flex: 4;
+}
+.search-bar {
+  width: 100%;
+  height: 2.5rem;
+  padding: 0px 15px;
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 30px;
+}
+.topbar-container .bx {
+  font-size: 1.8rem;
+}
+.search-input {
+  width: 80%;
+  margin-left: 15px;
+  border: none;
+}
+.search-input:focus {
+  outline: none;
+}
+
+
+.topbar-right {
+  flex: 4;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.topbar-links {
+  width: 140px;
+  display: flex;
+  justify-content: space-between;
+  color: white;
+}
+
+.topbar-icons {
+  width: 145px;
+  display: flex;
+  justify-content: space-evenly;
+}
+.topbar-icon-item {
+  margin-left: 2rem;
+  position: relative;
+  cursor: url("https://boxicons.com/#");
+}
+.topbar-icon-item .bx {
+  color: white;
+}
+.topbar-icon-badge {
+  width: 17.5px;
+  height: 17.5px;
+  position: absolute;
+  right: 2px;
+  bottom: -2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: red;
+  border-radius: 50%;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: white;
+}
+
+.topbar-img {
+  height: 50px;
+}
+.image {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  border: 3px solid white;
+  object-fit: cover;
+}
