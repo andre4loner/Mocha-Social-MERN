@@ -26,7 +26,7 @@ export default function Post({post, stateChanger, parentState}) {
   }, [currentUser._id, post.likes])
 
   useEffect(()=> {
-    const fetchUsers = async ()=> {
+    const fetchUser = async ()=> {
       try {
         const res = await axios.get(`/users?userID=${post.userID}`)
         setUser(res.data)
@@ -40,7 +40,7 @@ export default function Post({post, stateChanger, parentState}) {
         console.log(err)
       }
     }
-    fetchUsers()
+    fetchUser()
   }, [post.userID, parentState])
 
   const postMenuHandler = ()=> {
