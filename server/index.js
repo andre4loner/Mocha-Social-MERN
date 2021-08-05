@@ -54,7 +54,15 @@ app.get("/", (req, res)=> {
   res.send("beibi..")
 })
 
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("./client/build"))
+  
+  app.get("*", (req, res)=> {
+    res.sendFile("index.html", {root: "../client/build"})
+  })
+}
 
-app.listen(7222, ()=> {
+const PORT = process.env.PORT || 7222
+app.listen(PORT, ()=> {
   console.log("Server running...")
 })
