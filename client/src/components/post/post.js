@@ -110,7 +110,7 @@ export default function Post({post, page, stateChanger, parentState}) {
         <div className="post-top">
           <div className="post-top-left">
             <Link to={`/${user.username}`} style={{textDecoration:"none", display: "flex", color: "black"}}>
-              <img src={PF_avatar+user.profilePicture} alt="" className="post-profile-img" />
+              <img src={require("/images/avatars/"+user.profilePicture)} alt="" className="post-profile-img" />
               <div className="post-user-info">
                 <span className="post-user-name">{user.name}</span>
                 <span className="post-user-username">@{user.username}</span>
@@ -146,7 +146,7 @@ export default function Post({post, page, stateChanger, parentState}) {
           {
             post.img
               ?
-                <img src={PF_post+post.img} alt="" className="post-img" />
+                <img src={require("/images/post/"+post.img)} alt="" className="post-img" />
               : ""
           }
           <span className={`post-text ${post.img ? "text-with-image" : "text-without-image"}`}>
