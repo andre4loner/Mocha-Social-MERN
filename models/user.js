@@ -3,28 +3,31 @@ const mongoose = require("mongoose")
 
 const UserSchema = new mongoose.Schema(
   {
+    name: {
+      type: String,
+      required: true,
+      min: 3,
+      max: 35
+    },
     username: {
       type: String,
       required: true,
       min: 3,
-      max: 20,
+      max: 25,
       unique: true
     },
     email: {
       type: String,
       required: true,
-      max: 50,
-      unique: true
+      max: 50
     },
     password: {
       type: String,
       required: true,
-      min: 6,
-      unique: true
+      min: 6
     },
     profilePicture: {
-      type: String,
-      default: ""
+      type: String
     },
     coverPicture: {
       type: String,
@@ -42,16 +45,9 @@ const UserSchema = new mongoose.Schema(
       type: Boolean,
       default: false
     },
-    desc: {
+    bio: {
       type: String,
       max: 50
-    },
-    from: {
-      type: Object,
-      default: {
-        city: "",
-        country: ""
-      }
     }
   },
   {timestamps: true}

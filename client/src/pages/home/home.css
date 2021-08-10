@@ -4,3 +4,11 @@
   height: calc(100vh - 60px);
   max-height: 3000px;
 }
+
+.feed-super-container {
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(108, 61, 61, 0.35) rgba(108, 61, 61, 0.1);
+}

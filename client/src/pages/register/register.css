@@ -34,8 +34,8 @@
 }
 
 .register-wrapper {
-  width: 375px;
-  height: 625px;
+  width: 360px;
+  height: 600px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -52,7 +52,7 @@
 
 .register-top {
   width: 100%;
-  height: 85px;
+  height: 70px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -68,16 +68,6 @@
   font-size: 1.3rem;
   font-weight: 500;
 }
-
-/* .register-logo-img {
-  margin-bottom: 0px;
-  margin-left: 80px;
-  width: 125px;
-  height: 125px;
-  border-radius: 50%;
-  object-fit: cover;
-} */
-
 
 .register-logo-text {
   position: absolute;
@@ -103,19 +93,19 @@
 }
 
 .register-bottom {
-  margin-top: 50px;
+  margin-top: 40px;
   height: 500px;
   width: 300px;
 }
 .register-form {
   width: 250px;
   position: absolute;
-  right: 25px;
+  right: 20px;
   display: flex;
   flex-direction: column;
 }
 .register-input {
-  margin: 15px 0px 20px;
+  margin: 0 0px 25px;
   padding: 0rem 1.3rem;
   height: 45px;
   width: 100%;
@@ -133,10 +123,9 @@
 }
 .register-button {
   max-width: 180px;
-  margin-top: 10px;
   padding: 0.5rem 1.8rem;
   align-self: center;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   font-weight: 600;
   border-radius: 3rem;
   border: none;
@@ -153,7 +142,7 @@
 }
 
 .log-in {
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   margin-left: 68px;
   padding: 0.4rem 1.6rem;
   align-self: center;

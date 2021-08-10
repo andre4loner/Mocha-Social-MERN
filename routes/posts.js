@@ -3,6 +3,7 @@ const router = require("express").Router()
 const Post = require("../models/post.js")
 const User = require("../models/user.js")
 
+
 router.get("/all", async (req, res)=> {
   try {
     const posts = await Post.find()
@@ -53,7 +54,6 @@ router.delete("/delete/:id", async (req, res)=> {
   // console.log(req.body.userID)
   try {
     const post = await Post.findById(req.params.id)
-
     if (req.body.userID === post.userID || req.body.isAdmin) {
       await Post.findByIdAndDelete(req.params.id)
       res.status(200).json("Post deleted")
@@ -107,16 +107,17 @@ router.get("/post/:id", async (req, res)=> {
 
 // Get timeline posts
 router.get("/timeline/:id", async (req, res)=> {
-  // let postArray = []
+  let posts = []
   try {
     const user = await User.findById(req.params.id)
-    const userPosts = await Post.find({ userID: req.params.id })
+    // const userPosts = await Post.find({ userID: req.params.id })
     const followingPosts = await Promise.all(
       user.following.map((followingID)=> {
         return Post.find({ userID: followingID})
       })
     )
-    res.status(200).json(userPosts.concat(...followingPosts))
+    // res.status(200).json(userPosts.concat(...followingPosts))
+    res.status(200).json(posts.concat(...followingPosts))
   }
   catch (err) {
     res.status(500).json(err)

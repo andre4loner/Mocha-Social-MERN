@@ -25,10 +25,9 @@ export default function App() {
           { user ? <Redirect to="/" /> : <Login />}
         </Route>
         <Route path="/:user">
-          { user ? <Profile/> : <Redirect to="/login" /> }
+          { user ? <Profile /> : <Redirect to="/login" />}
         </Route>
       </Switch>
     </Router>
   )
 }
-

@@ -1,10 +1,9 @@
 
-import React, { useRef, useContext } from 'react'
+import React, { useRef, useContext } from "react"
 import { Link } from "react-router-dom"
-import "./login.css"
-
 import { loginCall } from "../../apiCalls.js"
 import { AuthContext } from "../../context/AuthContext.js"
+import "./login.css"
 
 
 export default function Login() {
@@ -20,7 +19,7 @@ export default function Login() {
       password: password.current.value
     }, dispatch)
   }
-  console.log(user)
+  // console.log(user)
 
   return (
     <React.Fragment>

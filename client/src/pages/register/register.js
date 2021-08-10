@@ -1,49 +1,57 @@
 
-import React, { useRef } from "react"
-import { useHistory } from "react-router"
+import React, { useRef, useContext } from "react"
+// import { useHistory } from "react-router"
 import { Link } from "react-router-dom"
 import axios from "axios"
-import "./register.css"
-
 import { registerCall } from "../../apiCalls.js"
 import { AuthContext}  from "../../context/AuthContext.js"
+import "./register.css"
+
 
 export default function Register() {
+  const name = useRef()
   const username = useRef()
   const email = useRef()
   const password = useRef()
   const passwordConfirm = useRef()
 
-  const history = useHistory()
-  // const { user } = useContext(AuthContext)
+  // const history = useHistory()
+  const { user, dispatch } = useContext(AuthContext)
 
   const handleClick = async (e)=> {
     e.preventDefault()
 
-    if (passwordConfirm.current.value === password.current.value) {
-      // registerCall({
-      //   username: username.current.value,
-      //   email: email.current.value,
-      //   password: password.current.value
-      // }, disptach)
-
-      const user = {
-        username: username.current.value,
-        email: email.current.value,
-        password: password.current.value
-      }
-      try {
-        await axios.post("/auth/register", user)
-        history.push("/login")
-
-      }
-      catch (err){
-        console.log(err)
-      }
+    const res = axios.get(`/api/users?username=${username.current.value}`)
+    if (res.status === 200) {
+      alert("User already exists with that username.")
     }
     else {
-      // passwordConfirm.current.setCustomValidity("Make sure both passwords match")
-      alert("Passwords don't match.")
+      if (passwordConfirm.current.value === password.current.value) {
+        registerCall({
+          name: name.current.value,
+          username: username.current.value,
+          email: email.current.value,
+          password: password.current.value
+        }, dispatch)
+  
+        // const user_register = {
+        //   name: name.current.value,
+        //   username: username.current.value,
+        //   email: email.current.value,
+        //   password: password.current.value
+        // }
+        // try {
+        //   user = await axios.post("api/auth/register", user_register)
+        //   history.push("/login")
+  
+        // }
+        // catch (err){
+        //   console.log(err)
+        // }
+      }
+      else {
+        alert("Passwords don't match.")
+      }
     }
   }
 
@@ -52,7 +60,6 @@ export default function Register() {
       <div className="register-container">
         <div className="register-wrapper">
           <div className="register-top">
-            {/* <img src="https://www.pngitem.com/pimgs/b/23-230031_coffee-cup-transparent-png.png" alt="" className="register-logo-img" /> */}
             <h2 className="register-title">Create an account!</h2>
           </div>
 
@@ -61,6 +68,7 @@ export default function Register() {
 
           <div className="register-bottom">
             <form action="" onSubmit={handleClick} className="register-form">
+              <input required placeholder="Name" ref={name} type="text" minLength="3" maxLength="35" className="register-input" />
               <input required placeholder="Username" ref={username} type="text" minLength="3" maxLength="25" className="register-input" />
               <input required placeholder="Email" ref={email} type="email" className="register-input" />
               <input required placeholder="Password" ref={password} type="password" minLength="6" className="register-input" />

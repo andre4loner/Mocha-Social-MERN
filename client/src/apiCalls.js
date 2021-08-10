@@ -7,7 +7,7 @@ export const loginCall = async (userCred, dispatch)=> {
   })
 
   try {
-    const res = await axios.post("auth/login", userCred)
+    const res = await axios.post("api/auth/login", userCred)
     dispatch({
       type: "LOGIN_SUCCESS",
       payload: res.data
@@ -21,13 +21,14 @@ export const loginCall = async (userCred, dispatch)=> {
   }
 }
 
+
 export const registerCall = async (userCred, dispatch)=> {
   dispatch({
     type: "REGISTER_START"
   })
 
   try {
-    const res = await axios.post("auth/register", userCred)
+    const res = await axios.post("api/auth/register", userCred)
     dispatch({
       type: "REGISTER_SUCCESS",
       payload: res.data
@@ -39,4 +40,11 @@ export const registerCall = async (userCred, dispatch)=> {
       payload: err
     })
   }
+}
+
+
+export const logoutCall = (dispatch)=> {
+  dispatch({
+    type: "LOGOUT"
+  })
 }

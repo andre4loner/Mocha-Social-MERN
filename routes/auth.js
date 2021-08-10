@@ -13,12 +13,19 @@ router.post("/register", async (req, res)=> {
     // Password encryption
     const salt = await bcrypt.genSalt(10)
     const hashedPassword = await bcrypt.hash(req.body.password, salt)
+
     // Creating user from User model
+    img_no = Math.floor(Math.random() * 10) + 1
+    cover_no = Math.floor(Math.random() * 6) + 1
     const user = new User({
+      name: req.body.name,
       username: req.body.username,
       email: req.body.email,
-      password: hashedPassword
+      password: hashedPassword,
+      profilePicture: String(img_no) + "-avi.png",
+      coverPicture: String(cover_no) + "-cover.jpg"
     })
+
     // Saving user to databse
     const newUser = await user.save()
     res.status(200).json(newUser)
@@ -36,10 +43,10 @@ router.post("/login", async (req, res)=> {
       username: req.body.username
     })
     !user && res.status(404).json("User not found")
+
     // Comparing password from request with user password in database
     const passwordValid = await bcrypt.compare(req.body.password, user.password)
     !passwordValid && res.status(404).json("Password incorrect")
-    
     res.status(200).json(user)
   }
   catch (err) {

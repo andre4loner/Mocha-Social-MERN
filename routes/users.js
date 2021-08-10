@@ -68,11 +68,13 @@ router.get("/", async (req, res)=> {
     const user = userID
       ? await User.findById(userID)
       : await User.findOne({username: username})
-    const {password, updatedAt, createdAt, ...other} = user._doc
+    const {email, password, updatedAt, createdAt, ...other} = user._doc
     res.status(200).json(other)
   }
   catch (err) {
     res.status(500).json(err)
+    console.log(err)
+
   }
 })
 
@@ -86,7 +88,7 @@ router.put("/follow/:id", async (req, res)=> {
       if (!user.following.includes(req.params.id)) {
         await user.updateOne({ $push: {following: req.params.id} })
         await toFollow.updateOne({ $push: {followers: req.body.userID} })
-        res.status(200).json(user)
+        res.status(200).json(toFollow)
       }
       else {
         res.status(403).json("You are already following user")
@@ -111,7 +113,7 @@ router.put("/unfollow/:id", async (req, res)=> {
       if (user.following.includes(req.params.id)) {
         await user.updateOne({ $pull: {following: req.params.id} })
         await toFollow.updateOne({ $pull: {followers: req.body.userID} })
-        res.status(200).json(user)
+        res.status(200).json(toFollow)
       }
       else {
         res.status(403).json("You are not following user")

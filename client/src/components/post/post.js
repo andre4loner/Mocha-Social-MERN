@@ -1,14 +1,13 @@
 
 import { React, useState, useEffect, useContext } from "react"
 import { Link } from "react-router-dom"
+import { AuthContext } from "../../context/AuthContext"
 import axios from "axios"
 import { format } from "timeago.js"
 import "./post.css"
 
-import { AuthContext } from "../../context/AuthContext"
-// import { Users } from "../../dummy.js"
 
-export default function Post({post, stateChanger, parentState}) {
+export default function Post({post, page, stateChanger, parentState}) {
 
   const { user: currentUser } = useContext(AuthContext)
   const [user, setUser] = useState({})
@@ -18,7 +17,8 @@ export default function Post({post, stateChanger, parentState}) {
   const [postMenuStatus, setPostMenuStatus] = useState("")
   const [isFollowing, setIsFollowing] = useState()
   const [isDeleting, setIsDeleting] = useState(false)
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER
+  const PF_avatar = "/images/avatars/"
+  const PF_post = "/images/post/"
 
   useEffect(()=> {
     setIsLiked(post.likes.includes(currentUser._id))
@@ -28,7 +28,7 @@ export default function Post({post, stateChanger, parentState}) {
   useEffect(()=> {
     const fetchUser = async ()=> {
       try {
-        const res = await axios.get(`/users?userID=${post.userID}`)
+        const res = await axios.get(`api/users?userID=${post.userID}`)
         setUser(res.data)
         res.data.followers.includes(currentUser._id)
           ?
@@ -52,7 +52,7 @@ export default function Post({post, stateChanger, parentState}) {
 
   const likeHandler = async ()=> {
     try {
-      await axios.put(`/posts/like/${post._id}`, {
+      await axios.put(`api/posts/like/${post._id}`, {
         userID: currentUser._id
       })
     }
@@ -66,12 +66,12 @@ export default function Post({post, stateChanger, parentState}) {
   const followHandler = async ()=> {
     try {
       if (user.followers.includes(currentUser._id)) {
-        await axios.put(`/users/unfollow/${user._id}`, {
+        await axios.put(`api/users/unfollow/${user._id}`, {
           userID: currentUser._id
         })
       }
       else{
-        await axios.put(`/users/follow/${user._id}`, {
+        await axios.put(`api/users/follow/${user._id}`, {
           userID: currentUser._id
         })
       }
@@ -84,11 +84,18 @@ export default function Post({post, stateChanger, parentState}) {
 
   const deletePostHandler = async ()=> {
     menuCloseHandler()
+    const data = {
+      userID: currentUser._id,
+      img: post.img
+    }
     try {
       setIsDeleting(true)
-      await axios.delete(`/posts/delete/${post._id}`, { data: {
-        userID: currentUser._id
-      }})
+      // deleting file data from database
+      await axios.delete(`api/posts/delete/${post._id}`, { data: data})
+      // deleting actual file
+      if (post.img !== "") {
+        await axios.delete(`api/delete`, { data: data})
+      }
       stateChanger(parentState + 0.01)
     }
     catch(err) {
@@ -103,30 +110,33 @@ export default function Post({post, stateChanger, parentState}) {
         <div className="post-top">
           <div className="post-top-left">
             <Link to={`/${user.username}`} style={{textDecoration:"none", display: "flex", color: "black"}}>
-              <img src={PF+user.profilePicture} alt="" className="post-profile-img" />
+              <img src={PF_avatar+user.profilePicture} alt="" className="post-profile-img" />
               <div className="post-user-info">
-                <span className="post-user-name">{user.username}</span>
+                <span className="post-user-name">{user.name}</span>
                 <span className="post-user-username">@{user.username}</span>
               </div>
             </Link>
             {
-              post.userID !== currentUser._id
-                ?
-                  <span onClick={followHandler} className="follow">{
-                      isFollowing
-                        ? 
-                          "•\r \r Unfollow"
-                        :
-                          "•\r \r Follow"
-                  }</span>
+              page === "profile"
+                ?  ""
                 :
-                  ""
+                  post.userID !== currentUser._id
+                    ?
+                      <span onClick={followHandler} className="follow">{
+                          isFollowing
+                            ? 
+                              "•\r \r Unfollow"
+                            :
+                              "•\r \r Follow"
+                      }</span>
+                    : ""
             }
           </div>
           <div className="post-top-right">
             {
               post.userID === currentUser._id
-                ? <i onClick={postMenuHandler} className="fas fa-ellipsis-h"></i>
+                ?
+                  <i onClick={postMenuHandler} className="fas fa-ellipsis-h"></i>
                 : ""
             }
           </div>
@@ -135,8 +145,9 @@ export default function Post({post, stateChanger, parentState}) {
         <div className="post-center">
           {
             post.img
-            ? <img src={PF+post.img} alt="" className="post-img" />
-            : ""
+              ?
+                <img src={PF_post+post.img} alt="" className="post-img" />
+              : ""
           }
           <span className={`post-text ${post.img ? "text-with-image" : "text-without-image"}`}>
             {post.desc}
@@ -160,9 +171,9 @@ export default function Post({post, stateChanger, parentState}) {
             <div onClick={menuCloseHandler} className="menu-option">
               <i class="fas fa-times"></i>
             </div>
-            <div className="menu-option">
+            {/* <div className="menu-option">
               Edit
-            </div>
+            </div> */}
             <div onClick={deletePostHandler} className="menu-option">
               Delete
             </div>
@@ -173,7 +184,8 @@ export default function Post({post, stateChanger, parentState}) {
 
         {
           isDeleting 
-            ? <div className="post-loading-screen-wrapper">
+            ?
+              <div className="post-loading-screen-wrapper">
                 <div className="post-loading-screen">
                 </div>
                 <i class="fas fa-spinner fa-spin"></i>

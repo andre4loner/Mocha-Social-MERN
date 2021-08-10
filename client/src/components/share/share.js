@@ -1,25 +1,76 @@
 
-import React, { useContext, useState, useEffect, useRef } from "react"
+import React, { useContext, useState, useRef } from "react"
 import { AuthContext } from "../../context/AuthContext.js"
 import axios from "axios"
 import "./share.css"
 
-export default function Share() {
+
+export default function Share({page}) {
   const { user } = useContext(AuthContext)
   const [file, setFile] = useState(null)
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER
+  const [newPostIconPlus, setNewPostIconPlus] = useState(true)
 
   const desc = useRef()
 
+  const showShareHandler = ()=> {
+    if (newPostIconPlus) {
+      setNewPostIconPlus(false)
+      document.getElementsByClassName("share-container")[0].style.transform = "scale(1)"
+      document.getElementsByClassName("share-container")[0].style.webkitTransform = "scale(1)"
+      document.getElementsByClassName("new-post")[0].style.background = "red"
+      document.getElementsByClassName("sidebar-container")[0].style.filter = "blur(5px)"
+      if (page === "home") {
+        document.getElementsByClassName("feed-super-container")[0].style.filter = "blur(5px)"
+      } else {
+        document.getElementsByClassName("profile-right")[0].style.filter = "blur(5px)"
+      }
+    }
+    else {
+      setNewPostIconPlus(true)
+      setFile(null)
+      document.getElementsByClassName("share-container")[0].style.transform = "scale(0)"
+      document.getElementsByClassName("share-container")[0].style.webkitTransform = "scale(0)"
+      document.getElementsByClassName("new-post")[0].style.background = "darkblue"
+      document.getElementsByClassName("sidebar-container")[0].style.filter = "blur(0px)"
+      if (page === "home") {
+        document.getElementsByClassName("feed-super-container")[0].style.filter = "blur(0px)"
+      } else {
+        document.getElementsByClassName("profile-right")[0].style.filter = "blur(0px)"
+      }
+    }
+  }
+
+  const closeImgHandler = ()=> {
+    setFile(null)
+  }
+
   const handleShare = async (e)=> {
     e.preventDefault()
-    try {
-      const post = {
-        userID: user._id,
-        desc: desc.current.value,
-        img: ""
+    const post = {
+      userID: user._id,
+      desc: desc.current.value,
+      img: ""
+    }
+
+    if (file) {
+      let data = new FormData()
+      const fileName = `${Date.now()}_${file.name}`
+      data.append("file", file, fileName)
+      console.log(data)
+      post.img = fileName
+      try {
+        await axios.post("api/upload", data, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
       }
-      await axios.post("/posts/create", post)
+      catch(err) {
+        console.log(err)
+      }
+    }
+    try {
+      await axios.post("api/posts/create", post)
     }
     catch(err) {
       console.log(err)
@@ -28,32 +79,39 @@ export default function Share() {
   }
 
   return (
-    <div className="share-container">
-      <div className="share-wrapper">
-        <div className="share-top">
-          {/* <img src="/assets/person/9.jpeg" alt="" className="share-profile-img" /> */}
-          <textarea ref={desc} placeholder="Say something magic..." maxLength="180" className="share-input" />
-        </div>
-        {/* <hr className="share-hr" /> */}
-
-        <form className="share-bottom" id="share-form">
-          <div className="share-options">
-
-            <label htmlFor="file" className="share-option share-button">
-              <i className='bx bxs-image-add'></i>
-              <span className="share-option-text">Photo/Video</span>
-              <input style={{display: "none"}} type="file" id="file" accept=".png, .jpg, .jpeg" onChange={(e)=> setFile(e.target.files[0])}/>
-            </label>
-
-            {/* <div className="share-option share-button">
-              <i class="fas fa-map-marker-alt"></i>
-              <span className="share-option-text">Location</span>
-            </div> */}
-
+    <React.Fragment>
+      <div className="share-container">
+        <div className="share-wrapper">
+          <div className="share-top">
+            <textarea ref={desc} placeholder="Say something magic..." maxLength="180" className="share-input" />
           </div>
-          <button onClick={handleShare} className="share-button">Share</button>
-        </form>
+          
+          {
+            file && (
+              <div className="share-image-container">
+                <img src={URL.createObjectURL(file)} className="share-img"/>
+                <i onClick={closeImgHandler}class="close-image fas fa-times"></i>
+              </div>
+            )
+          }
+
+          <form className="share-bottom" id="share-form" enctype="multipart/form-data">
+            <div className="share-options">
+              <label htmlFor="file" className="share-option share-button">
+                <i className='bx bxs-image-add'></i>
+                <span className="share-option-text">Photo/Video</span>
+                <input style={{display: "none"}} type="file" id="file" accept=".png, .jpg, .jpeg, .bmp, .gif" onChange={(e)=> setFile(e.target.files[0])}/>
+              </label>
+            </div>
+
+            <button onClick={handleShare} className="share-button">Post</button>
+          </form>
+        </div>
       </div>
-    </div>
+
+      <div onClick={showShareHandler}       className="new-post">
+        <i class={`fas ${newPostIconPlus ? "fa-plus" : "fa-times"}`}></i> 
+      </div>
+    </React.Fragment>
   )
 }

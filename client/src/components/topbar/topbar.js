@@ -2,13 +2,12 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { AuthContext } from "../../context/AuthContext.js"
-
 import "./topbar.css"
 
 
 export default function Topbar() {
   const { user } = useContext(AuthContext)
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER
+  const PF_avatar = "/images/avatars/"
 
   return (
     <div className="topbar-container">
@@ -27,30 +26,12 @@ export default function Topbar() {
       </div>
 
       <div className="topbar-right">
-
-        {/* <div className="topbar-links">
-          <div className="topbar-link">Home</div>
-          <div className="topbar-link">Timeline</div>
-        </div> */}
-        
-        {/* <div className="topbar-icons">
-          <div className="topbar-icon-item">
-            <i className="bx bxs-user"></i>
-            <div className="topbar-icon-badge">1</div>
-          </div>
-          <div className="topbar-icon-item">
-            <i className="bx bxs-chat"></i>
-            <div className="topbar-icon-badge">2</div>
-          </div>
-          <div className="topbar-icon-item">
-            <i className="bx bxs-notification"></i>
-            <div className="topbar-icon-badge">1</div>
-          </div>
-        </div> */}
-
-        <div className="topbar-img">
-          <Link to={"/"+user.username}>
-            <img src={user.profilePicture ? PF+user.profilePicture : "https://w7.pngwing.com/pngs/223/244/png-transparent-computer-icons-avatar-user-profile-avatar-heroes-rectangle-black.png"} alt="" className="image" />
+        <div className="topbar-user">
+          <Link to={"/"+user.username} style={{textDecoration:"none", display: "flex", color: "black"}}>
+            <div className="post-user-info">
+              <span className="username">{user.name}</span>
+            </div>
+            <img src={PF_avatar+user.profilePicture} alt="" className="image"/>
           </Link>
         </div>
       </div>
