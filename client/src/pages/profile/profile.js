@@ -20,8 +20,8 @@ export default function Profile() {
   const [state, setState] = useState(0.01)
   const params = useParams()
   // console.log(params)
-  const PF_avatar = process.env.REACT_PUBLIC_FOLDER + "/avatars/"
-  const PF_cover = process.env.REACT_PUBLIC_FOLDER + "/covers/"
+  const PF_avatar = process.env.PUBLIC_ASSETS + "/avatars/"
+  const PF_cover = process.env.PUBLIC_ASSETS + "/covers/"
 
   useEffect(()=> {
     const fetchUser = async ()=> {
