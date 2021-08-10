@@ -18,7 +18,7 @@ export default function Post({post, page, stateChanger, parentState}) {
   const [isFollowing, setIsFollowing] = useState()
   const [isDeleting, setIsDeleting] = useState(false)
   const PF_avatar = "/images/avatars/"
-  const PF_post = "/images/post/"
+  const PF_post = process.env.REACT_PUBLIC_FOLDER + "post/"
 
   useEffect(()=> {
     setIsLiked(post.likes.includes(currentUser._id))
