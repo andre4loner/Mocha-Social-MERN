@@ -17,7 +17,7 @@ export default function Post({post, page, stateChanger, parentState}) {
   const [postMenuStatus, setPostMenuStatus] = useState("")
   const [isFollowing, setIsFollowing] = useState()
   const [isDeleting, setIsDeleting] = useState(false)
-  const PF_avatar = "/images/avatars/"
+  const PF_avatar = process.env.REACT_PUBLIC_FOLDER + "avatars/"
   const PF_post = process.env.REACT_PUBLIC_FOLDER + "post/"
 
   useEffect(()=> {
