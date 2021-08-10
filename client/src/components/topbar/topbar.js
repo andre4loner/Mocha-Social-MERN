@@ -7,7 +7,7 @@ import "./topbar.css"
 
 export default function Topbar() {
   const { user } = useContext(AuthContext)
-  const PF_avatar = process.env.REACT_PUBLIC_FOLDER + "avatars/"
+  const PF_avatar = process.env.REACT_PUBLIC_FOLDER + "/avatars/"
 
   return (
     <div className="topbar-container">
