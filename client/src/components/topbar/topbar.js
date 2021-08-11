@@ -7,7 +7,7 @@ import "./topbar.css"
 
 export default function Topbar() {
   const { user } = useContext(AuthContext)
-  const PF_avatar = process.env.PUBLIC_ASSETS + "/avatars/"
+  const PF_avatar = "https://mocha-social.herokuapp.com/images/avatars/"
 
   return (
     <div className="topbar-container">
