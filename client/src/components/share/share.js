@@ -104,7 +104,7 @@ export default function Share({page}) {
             )
           }
 
-          <form className="share-bottom" id="share-form" enctype="multipart/form-data">
+          <form className="share-bottom" id="share-form" enctype="multipart/form-data" method="POST">
             <div className="share-options">
               <label htmlFor="file" className="share-option share-button">
                 <i className='bx bxs-image-add'></i>
