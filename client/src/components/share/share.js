@@ -54,26 +54,35 @@ export default function Share({page}) {
 
     if (file) {
       let data = new FormData()
-      const fileName = `${Date.now()}_${file.name}`
-      data.append("file", file, fileName)
+      // const fileName = `${Date.now()}_${file.name}`
+      data.append("file", file)
       console.log(data)
-      post.img = fileName
       try {
-        await axios.post("api/upload", data, {
+        const res = await axios.post("api/posts/image/upload", data, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         })
+        if (res.status === 200) {
+          try {
+            post.img = res.data
+            await axios.post("api/posts/create", post)
+          }
+          catch(err) {
+            console.log(err)
+          }
+        }
       }
       catch(err) {
         console.log(err)
       }
-    }
-    try {
-      await axios.post("api/posts/create", post)
-    }
-    catch(err) {
-      console.log(err)
+    } else {
+      try {
+        await axios.post("api/posts/create", post)
+      }
+      catch(err) {
+        console.log(err)
+      }
     }
     document.getElementById("share-form").submit()
   }
@@ -89,8 +98,8 @@ export default function Share({page}) {
           {
             file && (
               <div className="share-image-container">
-                <img src={URL.createObjectURL(file)} className="share-img"/>
-                <i onClick={closeImgHandler}class="close-image fas fa-times"></i>
+                <img src={URL.createObjectURL(file)} alt="Image to upload" className="share-img"/>
+                <i onClick={closeImgHandler} class="close-image fas fa-times"></i>
               </div>
             )
           }
@@ -100,7 +109,7 @@ export default function Share({page}) {
               <label htmlFor="file" className="share-option share-button">
                 <i className='bx bxs-image-add'></i>
                 <span className="share-option-text">Photo/Video</span>
-                <input style={{display: "none"}} type="file" id="file" accept=".png, .jpg, .jpeg, .bmp, .gif" onChange={(e)=> setFile(e.target.files[0])}/>
+                <input style={{display: "none"}} type="file" name="file" id="file" accept=".png, .jpg, .jpeg, .bmp, .gif" onChange={(e)=> setFile(e.target.files[0])}/>
               </label>
             </div>
 

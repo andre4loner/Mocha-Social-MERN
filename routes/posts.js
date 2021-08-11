@@ -1,8 +1,32 @@
 
 const router = require("express").Router()
+const aws = require("aws-sdk")
+const multer = require("multer")
+const multerS3 = require("multer-s3")
+const uuid = require("uuid").v4
+const path = require("path")
+
 const Post = require("../models/post.js")
 const User = require("../models/user.js")
 
+// AWS Credentials
+const s3 = new aws.S3({ apiVersion: '2006-03-01' })
+let fileName = ""
+const upload = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: "mocha-posts",
+    acl: "public-read",
+    metadata: (req, file, cb)=> {
+      cb(null, { fieldName: file.fieldname })
+    },
+    key: (req, file, cb)=> {
+      const ext = path.extname(file.originalname)
+      fileName = `${uuid()}${ext}`
+      cb(null, fileName)
+    }
+  })
+})
 
 router.get("/all", async (req, res)=> {
   try {
@@ -27,7 +51,16 @@ router.post("/create", async (req, res)=> {
     res.status(500).json(err)
   }
 })
-
+// Upload image to AWS
+router.post("/image/upload", upload.single("file"), (req, res)=> {
+  try{
+    const fileURL  = req.file.location
+    return res.status(200).send(fileURL)
+  }
+  catch(err) {
+    console.log(err)
+  }
+})
 
 // Update post
 router.put("/update/:id", async (req, res)=> {
@@ -51,7 +84,6 @@ router.put("/update/:id", async (req, res)=> {
 
 // Delete post
 router.delete("/delete/:id", async (req, res)=> {
-  // console.log(req.body.userID)
   try {
     const post = await Post.findById(req.params.id)
     if (req.body.userID === post.userID || req.body.isAdmin) {
@@ -66,7 +98,13 @@ router.delete("/delete/:id", async (req, res)=> {
     res.status(500).json(err)
   }
 })
-
+// Delete image from AWS
+router.delete("/image/delete", async (req, res)=> {
+  s3.deleteObject({ Bucket: "mocha-posts", Key: req.body.name }, (err, data)=> {
+    if (err) throw err
+    return res.status(200).json("Image deleted")
+  })
+})
 
 // Like and unlike post
 router.put("/like/:id", async (req, res)=> {
@@ -76,8 +114,6 @@ router.put("/like/:id", async (req, res)=> {
       await post.updateOne({
         $push: {likes: req.body.userID}
       })
-      // console.log(post.userID)
-      // console.log(req.body.userID)
       res.status(200).json("Post is now liked")
     }
     else {

@@ -19,9 +19,8 @@ export default function Profile() {
   const [isFollowing, setIsFollowing] = useState()
   const [state, setState] = useState(0.01)
   const params = useParams()
-  // console.log(params)
-  const PF_avatar = process.env.PUBLIC_ASSETS + "/avatars/"
-  const PF_cover = process.env.PUBLIC_ASSETS + "/covers/"
+  const PF_avatar = "/images/avatars"
+  const PF_cover = "/images/covers/"
 
   useEffect(()=> {
     const fetchUser = async ()=> {
@@ -56,13 +55,13 @@ export default function Profile() {
   const followHandler = async ()=> {
     try {
       if (user.followers.includes(currentUser._id)) {
-        const res = await axios.put(`api/users/unfollow/${user._id}`, {
+        await axios.put(`api/users/unfollow/${user._id}`, {
           userID: currentUser._id
         })
         setState(state + 0.01)
       }
       else{
-        const res = await axios.put(`api/users/follow/${user._id}`, {
+        await axios.put(`api/users/follow/${user._id}`, {
           userID: currentUser._id
         })
         setState(state + 0.01)
@@ -88,8 +87,8 @@ export default function Profile() {
         <div className="profile-right">
           <div className="profile-right-top">
             <div className="profile-background">
-              <img src={PF_cover+user.coverPicture} alt="" className="background-img" />
-              <img src={PF_avatar+user.profilePicture} alt="" className="profile-photo" />
+              <img src={PF_cover+user.coverPicture} alt="Cover Picture" className="background-img" />
+              <img src={PF_avatar+user.profilePicture} alt="Avatar" className="profile-photo" />
             </div>
 
             <div className="profile-info">

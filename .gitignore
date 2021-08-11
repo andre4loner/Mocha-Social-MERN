@@ -4,6 +4,6 @@
 
 *.env
 
-*public/
 *build/
-!client/public/
+*post/
+!client/src/components/post/

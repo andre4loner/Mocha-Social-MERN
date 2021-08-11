@@ -7,7 +7,7 @@ import "./topbar.css"
 
 export default function Topbar() {
   const { user } = useContext(AuthContext)
-  const PF_avatar = "https://mocha-social.herokuapp.com/images/avatars/"
+  const PF_avatar = "/images/avatars/"
 
   return (
     <div className="topbar-container">
@@ -31,7 +31,7 @@ export default function Topbar() {
             <div className="post-user-info">
               <span className="username">{user.name}</span>
             </div>
-            <img src={PF_avatar+user.profilePicture} alt="" className="image"/>
+            <img src={PF_avatar+user.profilePicture} alt="Cover Picture" className="image"/>
           </Link>
         </div>
       </div>

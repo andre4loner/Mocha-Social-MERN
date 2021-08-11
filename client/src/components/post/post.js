@@ -17,8 +17,7 @@ export default function Post({post, page, stateChanger, parentState}) {
   const [postMenuStatus, setPostMenuStatus] = useState("")
   const [isFollowing, setIsFollowing] = useState()
   const [isDeleting, setIsDeleting] = useState(false)
-  const PF_avatar = process.env.PUBLIC_ASSETS + "/avatars/"
-  const PF_post = process.env.PUBLIC_ASSETS + "/post/"
+  const PF_avatar = "/images/avatars/"
 
   useEffect(()=> {
     setIsLiked(post.likes.includes(currentUser._id))
@@ -90,12 +89,17 @@ export default function Post({post, page, stateChanger, parentState}) {
     }
     try {
       setIsDeleting(true)
-      // deleting file data from database
-      await axios.delete(`api/posts/delete/${post._id}`, { data: data})
       // deleting actual file
       if (post.img !== "") {
-        await axios.delete(`api/delete`, { data: data})
+        const parts = post.img.split("/")
+        const name = parts[parts.length-1]
+        const res = await axios.delete(`api/posts/image/delete`, {name: name})
+        if (res.staus === 200) {
+          await axios.delete(`api/posts/delete/${post._id}`, {data: data})
+        }
       }
+      // deleting file data from database
+      await axios.delete(`api/posts/delete/${post._id}`, { data: data})
       stateChanger(parentState + 0.01)
     }
     catch(err) {
@@ -110,7 +114,7 @@ export default function Post({post, page, stateChanger, parentState}) {
         <div className="post-top">
           <div className="post-top-left">
             <Link to={`/${user.username}`} style={{textDecoration:"none", display: "flex", color: "black"}}>
-              <img src={"/images/avatars/"+user.profilePicture} alt="" className="post-profile-img" />
+              <img src={PF_avatar+user.profilePicture} alt="Cover Picture" className="post-profile-img" />
               <div className="post-user-info">
                 <span className="post-user-name">{user.name}</span>
                 <span className="post-user-username">@{user.username}</span>
@@ -146,7 +150,7 @@ export default function Post({post, page, stateChanger, parentState}) {
           {
             post.img
               ?
-                <img src={"images/post/"+post.img} alt="" className="post-img" />
+                <img src={post.img} alt="Post image" className="post-img" />
               : ""
           }
           <span className={`post-text ${post.img ? "text-with-image" : "text-without-image"}`}>
