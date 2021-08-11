@@ -19,7 +19,7 @@ export default function Profile() {
   const [isFollowing, setIsFollowing] = useState()
   const [state, setState] = useState(0.01)
   const params = useParams()
-  const PF_avatar = "/images/avatars"
+  const PF_avatar = "/images/avatars/"
   const PF_cover = "/images/covers/"
 
   useEffect(()=> {
