@@ -81,7 +81,7 @@ export default function Profile() {
         {
           user._id === currentUser._id
             ?
-              <Share page="profile"/>
+              <Share page="profile" parentState={state} stateChanger={setState}/>
             : ""
         }
         <div className="profile-right">

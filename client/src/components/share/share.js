@@ -5,7 +5,7 @@ import axios from "axios"
 import "./share.css"
 
 
-export default function Share({page}) {
+export default function Share({page, parentState, stateChanger}) {
   const { user } = useContext(AuthContext)
   const [file, setFile] = useState(null)
   const [newPostIconPlus, setNewPostIconPlus] = useState(true)
@@ -85,6 +85,7 @@ export default function Share({page}) {
         console.log(err)
       }
     }
+    stateChanger(parentState + 0.01)
   }
 
   return (
