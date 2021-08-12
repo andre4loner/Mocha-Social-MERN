@@ -58,7 +58,6 @@ export default function Share({page}) {
     if (file) {
       let data = new FormData()
       data.append("file", file)
-      console.log(data)
       try {
         const res = await axios.post("api/posts/image/upload", data, {
           headers: {
@@ -106,7 +105,7 @@ export default function Share({page}) {
             )
           }
 
-          <form className="share-bottom" id="share-form" enctype="multipart/form-data" action={`/${user.username}`} method="GET">
+          <form className="share-bottom" id="share-form" enctype="multipart/form-data" action="">
             <div className="share-options">
               <label htmlFor="file" disabled={isPosting} className="share-option share-button">
                 <i className='bx bxs-image-add'></i>
