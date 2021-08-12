@@ -46,6 +46,9 @@ export default function Share({page}) {
 
   const handleShare = async (e)=> {
     e.preventDefault()
+    document.getElementsByClassName("share-button")[0].style.cursor = "not-allowed"
+    document.getElementsByClassName("share-button")[1].style.cursor = "not-allowed"
+
     const post = {
       userID: user._id,
       desc: desc.current.value,
@@ -54,7 +57,6 @@ export default function Share({page}) {
 
     if (file) {
       let data = new FormData()
-      // const fileName = `${Date.now()}_${file.name}`
       data.append("file", file)
       console.log(data)
       try {
@@ -104,7 +106,7 @@ export default function Share({page}) {
             )
           }
 
-          <form className="share-bottom" id="share-form" enctype="multipart/form-data" method="POST">
+          <form className="share-bottom" id="share-form" enctype="multipart/form-data" action="">
             <div className="share-options">
               <label htmlFor="file" className="share-option share-button">
                 <i className='bx bxs-image-add'></i>
@@ -112,7 +114,7 @@ export default function Share({page}) {
                 <input style={{display: "none"}} type="file" name="file" id="file" accept=".png, .jpg, .jpeg, .bmp, .gif" onChange={(e)=> setFile(e.target.files[0])}/>
               </label>
             </div>
-
+54
             <button onClick={handleShare} className="share-button">Post</button>
           </form>
         </div>
