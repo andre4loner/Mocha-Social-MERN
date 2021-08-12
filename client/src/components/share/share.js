@@ -1,15 +1,17 @@
 
 import React, { useContext, useState, useRef } from "react"
+import { useHistory } from "react-router-dom"
 import { AuthContext } from "../../context/AuthContext.js"
 import axios from "axios"
 import "./share.css"
 
 
-export default function Share({page, parentState, stateChanger}) {
+export default function Share({page}) {
   const { user } = useContext(AuthContext)
   const [file, setFile] = useState(null)
   const [newPostIconPlus, setNewPostIconPlus] = useState(true)
   const [isPosting, setIsPosting] = useState(false)
+  const history = useHistory()
 
   const desc = useRef()
 
@@ -85,7 +87,7 @@ export default function Share({page, parentState, stateChanger}) {
         console.log(err)
       }
     }
-    stateChanger(parentState + 0.01)
+    history.push(`/${user.username}`)
   }
 
   return (
