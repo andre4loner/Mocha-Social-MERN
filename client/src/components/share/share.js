@@ -87,7 +87,7 @@ export default function Share({page}) {
         console.log(err)
       }
     }
-    history.push(`/${user.username}`)
+    window.location.replace(`/${user.username}`)
   }
 
   return (

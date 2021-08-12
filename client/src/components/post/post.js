@@ -93,7 +93,6 @@ export default function Post({post, page, stateChanger, parentState}) {
       if (post.img !== "") {
         const parts = post.img.split("/")
         const name = parts[parts.length-1]
-        console.log(name)
         const res = await axios.delete(`api/posts/image/delete`, {data: {
           name: name
         }})
