@@ -52,7 +52,7 @@ export default function Register() {
           <div className="register-bottom">
             <form action="" onSubmit={handleClick} className="register-form">
               <input required placeholder="Name" ref={name} type="text" minLength="3" maxLength="35" className="register-input" />
-              <input required placeholder="Username" ref={username} type="text" minLength="3" maxLength="25" className="register-input" />
+              <input required placeholder="Username" ref={username} type="text" minLength="3" maxLength="25" pattern="^\S+$" className="register-input" />
               <input required placeholder="Email" ref={email} type="email" className="register-input" />
               <input required placeholder="Password" ref={password} type="password" minLength="6" className="register-input" />
               <input required placeholder="Confirm Password" ref={passwordConfirm}  type="password" minLength="6" className="register-input" />
