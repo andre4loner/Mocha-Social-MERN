@@ -111,9 +111,6 @@
   color: darkblue;
   border: none;
   text-align: center;
-  /* border: 2px solid rgb(255, 231, 217, 1); */
-  /* -webkit-box-shadow: 0px 0px 15px rgba(150, 150, 150, 0.6);
-  box-shadow: 0px 4px 10px rgba(150, 150, 150, 0.4); */
 }
 .login-input:focus {
   outline: none;

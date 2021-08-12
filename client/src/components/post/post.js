@@ -93,13 +93,18 @@ export default function Post({post, page, stateChanger, parentState}) {
       if (post.img !== "") {
         const parts = post.img.split("/")
         const name = parts[parts.length-1]
-        const res = await axios.delete(`api/posts/image/delete`, {name: name})
-        if (res.staus === 200) {
+        console.log(name)
+        const res = await axios.delete(`api/posts/image/delete`, {data: {
+          name: name
+        }})
+        if (res.status === 200) {
+          // deleting file data from database
           await axios.delete(`api/posts/delete/${post._id}`, {data: data})
         }
+      } else {
+        // deleting file data from database
+        await axios.delete(`api/posts/delete/${post._id}`, {data: data})
       }
-      // deleting file data from database
-      await axios.delete(`api/posts/delete/${post._id}`, { data: data})
       stateChanger(parentState + 0.01)
     }
     catch(err) {

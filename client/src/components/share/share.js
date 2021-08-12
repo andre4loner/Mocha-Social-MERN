@@ -9,6 +9,7 @@ export default function Share({page}) {
   const { user } = useContext(AuthContext)
   const [file, setFile] = useState(null)
   const [newPostIconPlus, setNewPostIconPlus] = useState(true)
+  const [isPosting, setIsPosting] = useState(false)
 
   const desc = useRef()
 
@@ -46,8 +47,7 @@ export default function Share({page}) {
 
   const handleShare = async (e)=> {
     e.preventDefault()
-    document.getElementsByClassName("share-button")[0].style.cursor = "not-allowed"
-    document.getElementsByClassName("share-button")[1].style.cursor = "not-allowed"
+    setIsPosting(true)
 
     const post = {
       userID: user._id,
@@ -108,14 +108,16 @@ export default function Share({page}) {
 
           <form className="share-bottom" id="share-form" enctype="multipart/form-data" action="">
             <div className="share-options">
-              <label htmlFor="file" className="share-option share-button">
+              <label htmlFor="file" disabled={isPosting} className="share-option share-button">
                 <i className='bx bxs-image-add'></i>
                 <span className="share-option-text">Photo/Video</span>
                 <input style={{display: "none"}} type="file" name="file" id="file" accept=".png, .jpg, .jpeg, .bmp, .gif" onChange={(e)=> setFile(e.target.files[0])}/>
               </label>
             </div>
-54
-            <button onClick={handleShare} className="share-button">Post</button>
+
+            <button onClick={handleShare} disabled={isPosting} className="share-button">
+              {isPosting ? <i class="fas fa-spinner fa-spin"></i> : "Post"}
+            </button>
           </form>
         </div>
       </div>

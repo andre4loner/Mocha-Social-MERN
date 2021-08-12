@@ -16,7 +16,7 @@ const upload = multer({
   storage: multerS3({
     s3: s3,
     bucket: "mocha-posts",
-    acl: "public-read",
+    acl: "public-read-write",
     metadata: (req, file, cb)=> {
       cb(null, { fieldName: file.fieldname })
     },
@@ -100,6 +100,7 @@ router.delete("/delete/:id", async (req, res)=> {
 })
 // Delete image from AWS
 router.delete("/image/delete", async (req, res)=> {
+  console.log(req.body.name)
   s3.deleteObject({ Bucket: "mocha-posts", Key: req.body.name }, (err, data)=> {
     if (err) throw err
     return res.status(200).json("Image deleted")

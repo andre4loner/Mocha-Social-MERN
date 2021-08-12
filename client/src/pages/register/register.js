@@ -14,9 +14,7 @@ export default function Register() {
   const email = useRef()
   const password = useRef()
   const passwordConfirm = useRef()
-
-  // const history = useHistory()
-  const { user, dispatch } = useContext(AuthContext)
+  const { user, isFetching, error, dispatch } = useContext(AuthContext)
 
   const handleClick = async (e)=> {
     e.preventDefault()
@@ -33,21 +31,6 @@ export default function Register() {
           email: email.current.value,
           password: password.current.value
         }, dispatch)
-  
-        // const user_register = {
-        //   name: name.current.value,
-        //   username: username.current.value,
-        //   email: email.current.value,
-        //   password: password.current.value
-        // }
-        // try {
-        //   user = await axios.post("api/auth/register", user_register)
-        //   history.push("/login")
-  
-        // }
-        // catch (err){
-        //   console.log(err)
-        // }
       }
       else {
         alert("Passwords don't match.")
@@ -73,14 +56,13 @@ export default function Register() {
               <input required placeholder="Email" ref={email} type="email" className="register-input" />
               <input required placeholder="Password" ref={password} type="password" minLength="6" className="register-input" />
               <input required placeholder="Confirm Password" ref={passwordConfirm}  type="password" minLength="6" className="register-input" />
-              {/* <span className="forgot-password">
-                Forgot password?
-              </span> */}
-              <button type="submit" className="register-button">Sign up</button>
+              <button type="submit"  disabled={isFetching} className="register-button">
+                {isFetching ? <i class="fas fa-spinner fa-spin"></i> : "Sign up"}
+              </button>
             </form>
           </div>
-            <Link to="/login" className="log-in">
-              Log in instead?
+            <Link to="/login" disabled={isFetching} className="log-in">
+              {isFetching ? <i class="fas fa-spinner fa-spin"></i> : "Log in instead?"}
             </Link>
         </div>
 

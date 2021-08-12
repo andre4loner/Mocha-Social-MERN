@@ -19,7 +19,6 @@ export default function Login() {
       password: password.current.value
     }, dispatch)
   }
-  // console.log(user)
 
   return (
     <React.Fragment>
@@ -40,11 +39,13 @@ export default function Login() {
               {/* <span className="forgot-password">
                 Forgot password?
               </span> */}
-              <button onClick={handleClick} className="login-button" disabled={isFetching}>{isFetching ? <i class="fas fa-spinner fa-spin"></i> : "Login"}</button>
+              <button onClick={handleClick} disabled={isFetching} className="login-button">
+                {isFetching ? <i class="fas fa-spinner fa-spin"></i> : "Log in"}
+              </button>
             </form>
           </div>
             <Link to="/register" disabled={isFetching} className="create-account">
-            {isFetching ? <i class="fas fa-spinner fa-spin"></i> : "Sign up instead?"}
+              {isFetching ? <i class="fas fa-spinner fa-spin"></i> : "Sign up instead?"}
             </Link>
         </div>
         
