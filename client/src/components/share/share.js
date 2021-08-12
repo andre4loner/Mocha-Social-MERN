@@ -85,7 +85,6 @@ export default function Share({page}) {
         console.log(err)
       }
     }
-    document.getElementById("share-form").submit()
   }
 
   return (
